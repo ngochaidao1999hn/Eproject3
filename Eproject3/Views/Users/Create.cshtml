@@ -1,0 +1,105 @@
+﻿@model Eproject3.Models.Users
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var exErr = "";
+    if (ViewBag.exErr != null)
+    {
+        exErr = ViewBag.exErr;
+    }
+}
+<a style="color:red">@exErr</a>
+
+@using (Html.BeginForm("Create", "Users", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-container" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-sm-6 action-form">
+        <div class="center"><h2>SignUp</h2></div>
+       
+        @ViewBag.FileStatus
+        <h4>Users</h4>
+        <hr />
+        @Html.ValidationSummary(true, "")
+        <div class="box-radius-border">
+            @Html.LabelFor(model => model.UPhone)
+
+            @Html.EditorFor(model => model.UPhone)
+            @Html.ValidationMessageFor(model => model.UPhone, "")
+
+        </div>
+
+        <div class="box-radius-border">
+            @Html.LabelFor(model => model.UPass)
+
+            @Html.EditorFor(model => model.UPass, new { htmlAttributes = new { @type = "Password" } })
+            @Html.ValidationMessageFor(model => model.UPass, "")
+
+        </div>
+
+        <div class="box-radius-border">
+            @Html.LabelFor(model => model.UAdress)
+
+            @Html.EditorFor(model => model.UAdress)
+            @Html.ValidationMessageFor(model => model.UAdress, "")
+
+        </div>
+        <div class="box-radius-border">
+            @Html.LabelFor(model => model.AccNum)
+
+            @Html.EditorFor(model => model.AccNum)
+            @Html.ValidationMessageFor(model => model.AccNum, "")
+
+        </div>
+        <div class="form-group box-radius-border">
+            @Html.LabelFor(model => model.Img, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.Img, new { htmlAttributes = new { @class = "form-control" } })*@
+                <input type="file" name="Url" />
+                @Html.ValidationMessageFor(model => model.Img, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Roll_id, "Roll_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Roll_id", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Roll_id, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <br />
+        <div class="form-group">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Pack_id, "Pack_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-md-10">
+                    @Html.DropDownList("Pack_id", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Pack_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Exp_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Exp_Date, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Exp_Date, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <br />
+        <div class="col-sm-2">
+
+        </div>
+
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-default" >Register</button>
+            @*Hiện tại đang ở /Users/Create*@
+            @* đường dẫn tới Forget password /Users/LoginView*@
+            <button type="button" class="btn btn-default" onclick="goto('./LoginView')">Back</button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

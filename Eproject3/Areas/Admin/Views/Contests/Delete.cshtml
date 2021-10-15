@@ -1,0 +1,55 @@
+﻿@model Eproject3.Models.Contest
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Contest</h4>
+    @if (ViewBag.cas != null)
+    {
+        <h5 style="color:red">@ViewBag.cas </h5>
+        <a style="color:red" href="/Admin/Contests/ForceDelete/@Model.id">Force Delete</a>
+    }
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.C_Time)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.C_Time)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.C_Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.C_Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.exp_time)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.exp_time)
+        </dd>
+        <dt>
+            images
+        </dt>
+        <dd>
+            <img style="width:200px;height:180px" src="~/images/@Html.DisplayFor(model => model.img)" />
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

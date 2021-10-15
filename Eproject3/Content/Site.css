@@ -1,0 +1,250 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+.demo-non-form {
+    color: initial;
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-family: arial, verdana, sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+}
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Bahnschrift;
+}
+
+#detail-background {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 200% 200%;
+    overflow-y: auto;
+    -webkit-animation: Animation 10s ease infinite;
+    -moz-animation: Animation 10s ease infinite;
+    animation: Animation 10s ease infinite;
+}
+
+@-webkit-keyframes Animation {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 99% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+@-moz-keyframes Animation {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 99% 100%;
+    }
+
+    100% {
+        background-position: 10% 0%;
+    }
+}
+
+@keyframes Animation {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 99% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+
+#detail-content {
+    background-color: #dbd4d4;
+    min-height: 960px;
+    position: relative;
+}
+
+    #detail-content .col-sm-12 .col-sm-5 img {
+        width: 400px;
+        height: 477px;
+    }
+
+    #detail-content .col-sm-12 {
+        height: fit-content;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+.contenter {
+    margin-top: 15px;
+    background-color: white;
+    border-radius: 15px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.user-icon {
+    width: 70px;
+    height: 70px;
+    padding-top: 12px;
+    padding-left: 10px;
+    margin-top: 10px;
+    border-radius: 35px;
+}
+
+    .user-icon img {
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+    }
+
+.user-icon-feedback {
+    width: 30px;
+    height: 30px;
+    text-align: right;
+    margin-top: 10px;
+    margin-left: 20px;
+    border-radius: 35px;
+}
+
+    .user-icon-feedback img {
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+    }
+
+.title {
+    margin-top: 10px;
+    height: 70px;
+    margin-left: 40px;
+    text-align: left;
+}
+
+.blog-img {
+    margin-top: 10px;
+}
+
+    .blog-img img {
+        height: 400px;
+        width: 100%;
+    }
+
+.blog-content {
+    margin-top: 80px;
+}
+
+.bar {
+    text-align: center;
+    height: 40px;
+    margin-top: 10px;
+}
+
+    .bar .col-sm-12 {
+        border-bottom: 1px solid #b5b5b6;
+        border-top: 1px solid #b5b5b6;
+    }
+
+    .bar * {
+        height: 40px;
+    }
+
+    .bar .col-sm-12 > div {
+        padding-top: 10px;
+    }
+
+    .bar > .col-sm-12 > *:hover {
+        background-color: #b5b5b6;
+        border-radius: 5px;
+    }
+
+.comment {
+    background-color: #b5b5b6;
+    margin-top: 5px;
+    border-radius: 5px;
+    width: fit-content;
+    margin-bottom: 10px;
+}
+
+.feedback-content {
+    height: fit-content;
+    overflow: auto;
+    margin-top: 5px;
+    padding-top: 10px;
+}
+/*đánh giá*/
+div.stars {
+    width: 200px;
+    display: inline-block;
+}
+
+input.star {
+    display: none;
+}
+
+label.star {
+    float: right;
+    padding: 3px;
+    font-size: 27px;
+    color: #444;
+    transition: all .2s;
+    margin: 0 0 0 0;
+}
+
+input.star:checked ~ label.star:before {
+    content: '\f005';
+    color: #FD4;
+    transition: all .25s;
+}
+
+input.star-5:checked ~ label.star:before {
+    color: #FE7;
+    text-shadow: 0 0 20px #952;
+}
+
+input.star-1:checked ~ label.star:before {
+    color: #F62;
+}
+
+label.star:hover {
+    transform: rotate(-15deg) scale(1.3);
+}
+
+label.star:before {
+    content: '\f006';
+    font-family: FontAwesome;
+}

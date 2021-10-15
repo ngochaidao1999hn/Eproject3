@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Eproject3.Models.Contester>
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Contesters</title>
+</head>
+<body>
+    <table id="myTable" class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Contestant's Name
+                </th>
+                <th>
+                    Contestant's Phone number
+                </th>
+                <th>
+                    Contest
+                </th>
+                <th>
+                    Exam
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.Exams.Where(p => p.Contester_id == item.id).FirstOrDefault().E_Status == 0)
+                {
+                    <tr style="background-color:cadetblue">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contest.title)
+                        </td>
+                        <td>
+                            <a href="/Admin/Contesters/Exams?cterID=@item.id">
+                                Click here
+                            </a>
+                        </td>
+                        <td style="color:red">
+                            Not marked
+                        </td>
+                        <td>
+                            <a href="/Admin/Contesters/Delete/@item.id">Eliminate this </a>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contest.title)
+                        </td>
+                        <td>
+                            <a href="/Admin/Contesters/Exams?cterID=@item.id">
+                                Click here
+                            </a>
+                        </td>
+                        <td>
+                            marked
+                        </td>
+                        <td>
+                            <a href="/Admin/Contesters/Delete/@item.id">Eliminate this </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+
+<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+
+
+

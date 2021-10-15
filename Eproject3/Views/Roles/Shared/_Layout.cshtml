@@ -1,0 +1,133 @@
+﻿@using Eproject3.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    @Styles.Render("~/Content/bootstrap.min.css")
+    @Styles.Render("~/Content/HomePage.css")
+    @Styles.Render("~/Content/BackgroundAnimation.css")
+   
+
+    @{
+        var isvalid = (Users)Session["user"];
+    }
+    <script>
+
+
+        function goto(path) {
+            window.location.href = path;
+        }
+
+    </script>
+</head>
+<body>
+
+    <header>
+
+        <nav>
+            <div class="container nav">
+                <div class="right">
+                    <div>
+                        @if (isvalid != null)
+                        {
+                            <i><a href="/Users/Edit/@isvalid.id">Hello,@isvalid.UAdress</a></i>
+                                <i><a href="/Users/LogOut">Logout</a></i>
+                        }
+                        else
+                        {
+                            @*href="/Users/LoginView"*@
+                            <i><a href="/Users/LoginView">Login</a></i>
+                            //href="/Users/Create"
+                            <i><a href="/Users/Create">Register</a></i>
+                        }
+                    </div>
+                </div>
+                <div class="left">
+                    <img class="logo" src="~/Image/Logo/logo.png" />
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li>
+                            @Html.ActionLink("Home", "Index", "Home")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Contact", "Contact", "Home")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Recipes", "Index", "Recipes")
+
+                            <div class="my-dropdown-menu">
+                                <ul>
+                                    <li><a href="#">Favourite</a></li>
+                                    <li><a href="#">New</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Tips", "Tip", "Home")
+
+                            <div class="my-dropdown-menu">
+                                <ul>
+                                    <li><a href="#">Favourite</a></li>
+                                    <li><a href="#">New</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">Contest</a>
+                        </li>
+                        <li>
+                            @Html.ActionLink("FAG", "FAQ", "Home")
+                           
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container body-content">
+        @RenderBody()
+
+
+    </div>
+    <footer >
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-6">
+            <div class="container">
+                <div class="center">
+                    <img class="logo center" src="~/Image/Logo/logo-white.png" />
+                </div>
+            </div>
+            <div class="container">
+                <div class="col-sm-4">
+                    <h3><b>@Html.ActionLink("Home", "Index", "Home")</b></h3>
+                    <h3><b>@Html.ActionLink("Contact", "Contact", "Home")</b></h3>
+                    <h3><b>@Html.ActionLink("Recipces", "Index", "Recipces")</b></h3>
+                    <h3><b>@Html.ActionLink("Contets", "Index", "Contests")</b></h3>
+                    <h3><b>@Html.ActionLink("Tips", "Index", "Tips")</b></h3>
+                </div>
+
+            </div>
+            <hr />
+            <div class="container">
+                <div class="col-sm-4">
+                    Email me:<i><b>TranHuTu@gmail.com</b></i>
+                </div>
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+        </div>
+    </footer>
+
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

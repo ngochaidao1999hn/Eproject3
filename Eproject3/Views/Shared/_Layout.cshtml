@@ -1,0 +1,127 @@
+﻿@using Eproject3.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    @Styles.Render("~/Content/bootstrap.min.css")
+    @Styles.Render("~/Content/HomePage.css")
+    @Styles.Render("~/Content/BackgroundAnimation.css")
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @{
+        var isvalid = (Users)Session["user"];
+    }
+    <script>
+        function goto(path) {
+            window.location.href = path;
+        }
+
+        var prevScrollpos = window.pageYOffset;
+
+
+
+        window.onscroll = function () {
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos && window.pageYOffset > 100) {
+                document.getElementById("search-tool").style.display = "inline";
+            } else {
+                document.getElementById("search-tool").style.display = "none";
+            }
+            prevScrollpos = currentScrollPos;
+        }
+
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container nav">
+                <div class="left">
+                    <img class="logo" src="~/Image/Logo/logo.png" />
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li>
+                            @Html.ActionLink("Home", "Index", "Home")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Contact", "Contact", "Home")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Recipes", "Index", "Home")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Tips", "Tips", "Home")
+                        </li>
+                        <li>
+                            <a href="/Contests/">Contest</a>
+                        </li>
+                        <li>
+                            @Html.ActionLink("FAQ", "FAQ", "Home")
+                        </li>
+                        @if (isvalid != null)
+                        {
+                            <li class="right"><a href="/Users/LogOut">Logout</a></li>
+                            <li class="right " id="user-name"><a href="/Users/Edit/@isvalid.id">Hello,@isvalid.UAdress</a></li>
+                        }
+                        else
+                        {
+
+                            @*href="/Users/LoginView"*@
+                            <li class="right"><a href="/Users/Create">Register</a></li>
+                            <li class="right"><a href="/Users/LoginView">Login</a></li>
+
+                        }
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <footer>
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-6">
+            <div class="container">
+                <div class="center">
+                    <img class="logo center" src="~/Image/Logo/logo-white.png" />
+                </div>
+            </div>
+            <div class="container">
+                <div class="col-sm-12">
+                    <br />
+                    <h3 class="center"><b>@Html.ActionLink("Home", "Index", "Home")</b></h3>
+                    <br />
+                    <h3 class="center"><b>@Html.ActionLink("Contact", "Contact", "Home")</b></h3>
+                    <br />
+                    <h3 class="center"><b>@Html.ActionLink("Recipes", "Index", "Home")</b></h3>
+                    <br />
+                    <h3 class="center"><b><a href="/Contests/">Contest</a></b></h3>
+                    <br />
+                    <h3 class="center"><b>@Html.ActionLink("Tips", "Tips", "Home")</b></h3>
+                </div>
+
+            </div>
+            <hr />
+            <div class="container">
+                <div class="col-sm-4">
+                    Email me:<i><b>TranHuTu@gmail.com</b></i>
+                </div>
+            </div>
+            <div class="col-sm-3">
+            </div>
+        </div>
+    </footer>
+
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

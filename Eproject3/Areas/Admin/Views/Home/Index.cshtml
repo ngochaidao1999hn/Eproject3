@@ -1,0 +1,268 @@
+﻿@Styles.Render("~/Content/content/bootstrap.min.css")
+@Styles.Render("~/Content/content/light-bootstrap-dashboard.css")
+@Styles.Render("~/Content/content/demo.css")
+@model Eproject3.Models.Users
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/Content/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/Content/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Admin</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <script>
+        function openForm() {
+            var x = document.getElementById("myForm");
+            x.style.display = "none";
+            var y = document.getElementById("myUpdateForm");
+            y.style.display = "block";
+            document.getElementById("allContent").classList.add("blur");
+        }
+
+        function closeForm() {
+            var x = document.getElementById("myForm");
+            x.style.display = "block";
+            var y = document.getElementById("myUpdateForm");
+            y.style.display = "none";
+            document.getElementById("allContent").classList.remove("blur");
+        }
+    </script>
+    <style>
+        .blur {
+            filter: blur(2px);
+            -webkit-filter: blur(2px);
+            opacity: 0.9;
+        }
+
+        #myUpdateForm {
+            display: none;
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            z-index: 4;
+        }
+    </style>
+</head>
+<body>
+    <div class="col-md-8" id="myUpdateForm">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Edit Profile</h4>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.id)
+                    @Html.HiddenFor(model => model.UPass)
+                    @Html.HiddenFor(model => model.UPhone)
+                    @Html.HiddenFor(model => model.Img)
+                    <div class="row">
+                        <div class="col-md-5 pr-1">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                @Html.DisplayFor(model => model.UPhone, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 px-1">
+                            <div class="form-group">
+                                <label>Name</label>
+                                @Html.EditorFor(model => model.UAdress, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4 pl-1">
+                            <div class="form-group">
+                                <label>Account number</label>
+                                @Html.EditorFor(model => model.AccNum, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+
+                    //here
+                    <button type="submit" class="btn">Update</button>
+                    <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="wrapper" id="allContent">
+        <div class="sidebar" data-image="../Content/img/sidebar-5.jpg">
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="/Home/" class="simple-text">
+                        James Theme's Culinary blog
+                    </a>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Admin/Home/">
+                            <i class="nc-icon nc-circle-09"></i>
+                            <p>User Profile</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/Admin/Recipes">
+                            <i class="nc-icon nc-paper-2"></i>
+                            <p>Recipes</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/Admin/Categories">
+                            <i class="nc-icon nc-bullet-list-67"></i>
+                            <p>Category</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/Admin/Tips">
+                            <i class="nc-icon nc-notes"></i>
+                            <p>Tips</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/Admin/Contests">
+                            <i class="nc-icon nc-air-baloon"></i>
+                            <p>Contest</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/Admin/Users">
+                            <i class="nc-icon nc-badge"></i>
+                            <p>Users</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#pablo"> User </a>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        <ul class="nav navbar-nav mr-auto">
+                            <li class="dropdown nav-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <span class="notification">Private task</span>
+                                    <span class="d-lg-none">Notification</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <a class="dropdown-item" href="/Admin/Users/ChangePwd">Change password</a>
+                                    <a class="dropdown-item" href="/Admin/Users/ChangePhoto">Change profile picture</a>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home/">
+                                    <span class="no-icon">Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Admin/Users/LogOut">
+                                    <span class="no-icon">Log out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="content" id="myForm">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Edit Profile</h4>
+                                </div>
+                                <div class="card-body">
+                                    @using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(model => model.id)
+                                        @Html.HiddenFor(model => model.UPass)
+                                        @Html.HiddenFor(model => model.UPhone)
+                                        @Html.HiddenFor(model => model.Img)
+                                        <div class="row">
+                                            <div class="col-md-5 pr-1">
+                                                <div class="form-group">
+                                                    <label>Phone</label><br />
+                                                    @Html.DisplayFor(model => model.UPhone, new { htmlAttributes = new { @class = "form-control" } })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 px-1">
+                                                <div class="form-group">
+                                                    <label>Name</label>
+                                                    @Html.EditorFor(model => model.UAdress, new { htmlAttributes = new { @class = "form-control" } })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 pl-1">
+                                                <div class="form-group">
+                                                    <label>Account number</label>
+                                                    @Html.EditorFor(model => model.AccNum, new { htmlAttributes = new { @class = "form-control" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-info btn-fill pull-right" onclick="openForm()">Update Profile</button>
+                                        <div class="clearfix"></div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-user">
+                                <div class="card-image">
+                                    <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <div class="author">
+                                        <a href="#">
+                                            <img class="avatar border-gray" src="/images/@Html.DisplayFor(model => model.Img, new { htmlAttributes = new { @class = "form-control" } })" alt="...">
+                                            <h5 class="title">
+                                                @Html.DisplayFor(model => model.UAdress, new { htmlAttributes = new { @class = "form-control" } })
+                                            </h5>
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="button-container mr-auto ml-auto">
+                                    <button href="#" class="btn btn-simple btn-link btn-icon">
+                                        <i class="fa fa-facebook-square"></i>
+                                    </button>
+                                    <button href="#" class="btn btn-simple btn-link btn-icon">
+                                        <i class="fa fa-twitter"></i>
+                                    </button>
+                                    <button href="#" class="btn btn-simple btn-link btn-icon">
+                                        <i class="fa fa-google-plus-square"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!--   Core JS Files   -->
+
+</html>
+<script src="../Content/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="../Content/js/core/popper.min.js" type="text/javascript"></script>
+<script src="../Content/js/core/bootstrap.min.js" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="../Content/js/plugins/bootstrap-switch.js"></script>
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!--  Chartist Plugin  -->
+<script src="../Content/js/plugins/chartist.min.js"></script>
+<!--  Notifications Plugin    -->
+<script src="../Content/js/plugins/bootstrap-notify.js"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="../Content/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
+<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+<script src="../Content/js/demo.js"></script>

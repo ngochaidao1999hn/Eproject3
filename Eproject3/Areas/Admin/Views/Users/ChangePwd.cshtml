@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "ChangePwd";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<a style="color:red">@ViewBag.err</a>
+<h2>ChangePwd</h2>
+<form method="post" action="/Admin/Users/ChangePwd">
+    Enter your old password here :<input type="password" value="@ViewBag.old" name="oldp" /><br />
+    Enter your newPassword here:<input type="password" value="@ViewBag.newp" name="newp" /><br />
+    <button>Confirm</button>
+</form>

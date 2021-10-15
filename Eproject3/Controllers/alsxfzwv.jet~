@@ -1,0 +1,111 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using Eproject3.Models;
+using System.IO;
+
+namespace Eproject3.Controllers
+{
+    public class RecipesController : Controller
+    {
+        private DatabaseEntities db = new DatabaseEntities();
+
+        // GET: Recipes
+        public async Task<ActionResult> Index()
+        {
+            var recipes = db.Recipes.Include(r => r.Contester);
+            return View(await recipes.ToListAsync());
+        }
+
+        // GET: Recipes/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //Lay feedbacks
+            ViewBag.FeedBack = db.FeedBack.Where(m => m.Recipes_id == id).Include(i => i.Users).ToList();
+            Recipes recipes = await db.Recipes.FindAsync(id);
+            if (recipes == null)
+            {
+                return HttpNotFound();
+            }
+            return View(recipes);
+        }
+        /// <summary>
+        /// phan cu hai
+        /// </summary>
+        /// <returns></returns>
+        // GET: Recipes/Create
+        public ActionResult Create()
+        {
+           // ViewBag.Contester_id = new SelectList(db.Contester, "id", "Name");
+            return View();
+        }
+
+        // POST: Recipes/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "id,Title,Content,Img,Contester_id,R_Status")] Recipes recipes, HttpPostedFileBase[] Url, string[] txtText, string[] txtIgredent, int? Contester_id,int txtStatus)
+        {
+            string Cont = "";
+            string url_img = "";
+            string ingre = "";
+            string[] formats = new string[] { ".jpg", ".png", ".gif", ".jpeg" };
+            if (ModelState.IsValid)
+            {              
+                    try
+                    {
+                        foreach (HttpPostedFileBase img in Url)
+                        {
+                        if (img != null)
+                        {
+                            string path = Path.Combine(Server.MapPath("~/images"), Path.GetFileName(img.FileName));
+                            img.SaveAs(path);
+                            string ex = Path.GetExtension(img.FileName);
+                            if (!check(ex, formats))
+                            {
+                                ViewBag.FileStatus = ex + " is not an image";
+                                return View(recipes);
+                            }
+                            url_img += Path.GetFileName(img.FileName) + ",";
+                        }
+                        else
+                        {
+                            ViewBag.FileStatus = "Content must have image !!!!";
+                            return View(recipes);
+                        }
+                    }
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.FileStatus = "Error while file uploading.";
+                    }
+
+                    recipes.Img = url_img.Substring(0, url_img.Length - 1);
+
+                    foreach (var text in txtText)
+                    {
+                        if (text != "")
+                        {
+
+                            Cont += text + ",";
+                        }
+                    }
+                    foreach (var ingredent in txtIgredent)
+                    {
+                        if (ingredent != "")
+                        {
+
+                            ingre += ingredent + ",";
+                        }
+           

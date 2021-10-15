@@ -1,0 +1,28 @@
+﻿
+@model PagedList.IPagedList<Eproject3.Models.Contest>
+@using PagedList.Mvc;
+<div class="content">
+    <div class="container">
+        <h2>Contest</h2>
+        @*Cho nay hien thi Contest,An vao thi hien detal no ra,Tran Huu Tu lo phan nay*@
+        @foreach (var items in Model)
+        {
+            <div class="box-item relative">
+                <a href="/Contests/Details/@items.id">
+                    <div class="item">
+                        <div class="blur-hover">
+                            @items.title
+                        </div>
+                        <img src="~/images/@items.img" />
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+    <div>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page }))
+    </div>
+</div>

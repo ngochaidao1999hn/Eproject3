@@ -1,0 +1,48 @@
+﻿@model Eproject3.Models.Users
+@{
+    ViewBag.Title = "LoginView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var lErr = ViewBag.lErr;
+    var EpErr = ViewBag.EpErr;
+    var AuErr = ViewBag.AuErr;
+}
+
+<div class="col-sm-6 action-form">
+    <div class="center"><h2>Login</h2></div>
+    <a class="alert-info">@ViewBag.done</a>
+    <form action="/Users/Login" class="form-container" method="post">
+        <hr>
+        <div class="box-radius-border">
+            <label for="email"><b>Phone:</b></label>
+            <input type="text" placeholder="Enter Phonenumber" name="phones" required>
+        </div>
+        <div class="box-radius-border">
+            <label for="psw"><b>Password:</b></label>
+            <input type="password" placeholder="Enter Password" name="pwd" required>
+        </div>
+        <hr>
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-10">
+            <button type="submit" class="btn">Login</button>
+            @*Hiện tại đang ở /Users/LoginView*@
+            @* đường dẫn tới Forget password /Users/ForgetPwd*@
+            <button type="button" class="btn" onclick="goto('./ForgetPwd')">Forget password</button>
+        </div>
+    </form>
+</div>
+
+@if (lErr)
+{
+    <a style="color:red">Wrong credential</a>
+}
+@if (EpErr)
+{
+    <a style="color:red">Your account has expired</a>
+
+}
+@if (AuErr)
+{
+    <a style="color:red">Pls login to continue</a>
+}

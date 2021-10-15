@@ -1,0 +1,90 @@
+﻿@model Eproject3.Models.Recipes
+
+@{
+    ViewBag.Title = "Exams";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Exams</h2>
+
+<div>
+    <h4>Recipes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+
+        <dd>
+            @{
+                var Content_step = Model.Content.Split('$').ToList();
+                var ImgList = Model.Img.Split('$').ToList();
+                int i = 0;
+                foreach (var image in ImgList)
+                {
+                    i++;
+                    <div class="col-sm-12">
+                        <p>Step @i: @Content_step.ElementAt(i - 1)</p>
+                    </div>
+                    <div> <img  style="height:200px;width:160px" src="~/images/@image" alt="Food" /> </div>
+
+                }
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ingredent)
+        </dt>
+        <dd>
+            @{
+                List<string> ingre = Model.ingredent.Split('$').ToList();
+                foreach (var items in ingre)
+                {
+                    <li>@items</li>
+                }
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Levels)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Levels)
+        </dd>
+        <dt>
+            Category
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Categories.Cate_Name)
+        </dd>
+        @if (ViewBag.marked != null)
+        {
+            <dt>
+                Your mark:
+            </dt>
+            <dd>
+                @ViewBag.mark
+            </dd>
+        }
+        else
+        {
+            <form action="/Admin/Exams/Marking/">
+                <input type="hidden" name="id" value="@ViewBag.id" />
+                <dt>
+                    Your mark:
+                </dt>
+                <dd>
+                    <input type="number" name="mark" /><button>Submit</button>
+                </dd>
+            </form>
+        }
+
+    </dl>
+</div>

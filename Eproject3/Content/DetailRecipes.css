@@ -1,0 +1,32 @@
+﻿* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+#detail-background {
+    background: linear-gradient(-45deg,#112419,#465754,#695879,#281199);
+    overflow-y: auto;
+    height: auto;
+}
+
+@media(min-width:1000px) {
+    #detail-content {
+        display: block;
+    }
+}
+
+#detail-content {
+    background-color: white;
+    min-height: 960px;
+}
+
+    #detail-content img {
+        width: 400px;
+        height: 477px;
+    }
+
+    #detail-content .col-sm-12 {
+        height: fit-content;
+        min-height: 480px;
+    }

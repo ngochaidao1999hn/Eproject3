@@ -1,0 +1,51 @@
+﻿@model PagedList.IPagedList<Eproject3.Models.Recipes>
+@using PagedList.Mvc;
+@using Eproject3.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = (Users)Session["User"];
+
+}
+    <meta charshet="utf-8" />
+<h2>Your Own Recipce</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<h5 style="color:red">@ViewBag.exi</h5>
+<div class="content">
+    <div class="container">
+        @*Cho nay hien thi Recipes,An vao thi hien detal no ra,Dao Ngoc Hai lo phan nay*@
+        @foreach (var items in Model)
+        {
+
+
+            <div class="col-sm-4 box-item relative">
+                <div class="item">
+                    <div class="blur-hover">
+                        <h1>@items.Title</h1>
+                        @Html.ActionLink("Edit", "Edit", new { id = items.id })
+                        @Html.ActionLink("Details", "Details", new { id = items.id })
+                        @Html.ActionLink("Delete", "Delete", new { id = items.id })
+                    </div>
+                    <img src="~/images/@items.Img.Split('$').First()">
+                </div>
+            </div>
+
+        }
+
+    </div>
+    <div>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page }))
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "ForgetPwd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ForgetPwd</h2>
+<a style="color:red">@ViewBag.err</a>
+<form method="post" action="/Admin/Users/ForgetPwd">
+    Your Phone number :<input type="text" name="phone" value="@ViewBag.phone" /><br />
+    <button>Send</button>
+</form>
+@ViewBag.err

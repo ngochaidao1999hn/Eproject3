@@ -1,0 +1,92 @@
+﻿@model Eproject3.Models.Contest
+@using Eproject3.Models
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    PagedList.IPagedList<Eproject3.Models.Exams> exams = ViewBag.exams;    
+}
+<meta charshet="utf-8" />
+<div class="col-sm-12" id="detail-background">
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8 content-detail">
+            <div class="col-sm-12">
+                <a style="color:red">@ViewBag.early</a>
+                <a style="color:red">@ViewBag.exist</a>
+                <a style="color:red">@ViewBag.over</a>
+                <div class="center"><h1>@Html.DisplayFor(model => model.title)</h1></div>
+                <hr />
+                <p><b>Description</b></p>
+                <div class="col-sm-12">
+                    @Html.DisplayFor(model => model.C_Description)
+                </div>
+                <p><b>Requirement</b></p>
+                <div class="col-sm-12">
+                    @Html.DisplayFor(model => model.requirement)
+                </div>
+                <p><b>Duration</b></p>
+                <div class="col-sm-12">
+                    @Html.DisplayFor(model => model.C_Time) to @Html.DisplayFor(model => model.exp_time)
+                </div>
+                <p><b>Highest point</b></p>
+                <div class="col-sm-12">
+                    @if (Html.DisplayFor(model => model.id_winner).ToString().IsEmpty())
+                    {
+                        <h4>Not decided yet</h4>
+                    }
+                    else
+                    {
+                        <a href="/Recipes/Details/@Html.DisplayFor(model=>model.Contester1.Exams.First().Recipes_id)">@Html.DisplayFor(model => model.Contester1.Name)</a>
+                    }
+                </div>
+                <div class="col-sm-12">
+                    <div class="center-content">
+                        <img class="blog-img" src="~/images/@Html.DisplayFor(model => model.img)" />
+                    </div>
+                </div>
+                <div class="winner">
+                    <a href="/Contests/Join/@Html.DisplayFor(model => model.id)">Join this contest</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    <div class="col-sm-12">
+        @if (exams != null)
+        {
+            <h1>Submissions</h1>
+            foreach (var items in exams)
+            {
+                @*Thay link can cham diem vao day*@
+
+                <div class="box-item relative">
+                    <a href="/Recipes/Details/@items.Recipes.id">
+                        <div class="item">
+                            <div class="blur-hover">
+                                <h1>@items.Recipes.Title</h1>
+                                <h3 style="color:red">Mark:@items.Mark</h3>
+                            </div>
+                            <img src="~/images/@items.Recipes.Img.Split('$').First()">
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <h4>No Exams yet </h4>
+        }
+    </div>
+    <div>
+        Page @(exams.PageCount < exams.PageNumber ? 0 : exams.PageNumber) of @exams.PageCount
+
+        @Html.PagedListPager(exams, page => Url.Action("Details",
+            new { page }))
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,75 @@
+﻿@using Eproject3.Models
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var tips = (IEnumerable<Tips>)ViewBag.tips;
+    var recipes = (IEnumerable<Recipes>)ViewBag.recipes;
+    var count = 0;
+}
+
+<br />
+<form method="get" action="/Home/Search">
+
+    <input name="kw" class="search-bar" required type="text" placeholder="Search for Tips/Recipes: " value="@Request.Params["kw"]
+"/>
+    @*<button>Search</button>*@
+
+</form>
+<div class="content">
+    <h1>Recipes</h1>
+    <div class="container">
+        @if (recipes.Count() > 0)
+        {
+            foreach (var items in recipes)
+            {
+                <a href="/Recipes/Details/@items.id">
+                    <div class="col-sm-4">
+                        <div class="col-sm-4 box-item relative">
+                            <div class="item">
+                                <div class="blur-hover">
+                                    <h1>@items.Title</h1>
+                                </div>
+                                <img src="~/images/@items.Img.Split('$').Last()">
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+        }
+        else
+        {
+            <h4>Oop.No recipes found</h4>
+        }
+
+    </div>
+</div>
+<div class="content">
+    <div class="container">
+        @*Cho nay hien thi Tips,An vao thi hien detal no ra,Dao Ngoc Hai lo phan nay*@
+        <h1>Tips</h1>
+        @if (tips.Count() > 0)
+        {
+            foreach (var items in tips)
+            {
+
+                <a href="/Tips/Details/@items.id">
+                    <div class="col-sm-4">
+                        <div class="col-sm-4 box-item relative">
+                            <div class="item">
+                                <div class="blur-hover">
+                                    <h1>@items.Content</h1>
+                                </div>
+                                <img src="~/images/@items.Img.Split('$').First()">
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+        }
+        else
+        {
+            <h4>Oop.No tips found</h4>
+        }
+
+    </div>
+</div>

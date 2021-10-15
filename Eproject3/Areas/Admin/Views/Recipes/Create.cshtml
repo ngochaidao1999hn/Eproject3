@@ -1,0 +1,115 @@
+﻿@model Eproject3.Models.Recipes
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/Rate.css">
+@using (Html.BeginForm("Create", "Recipes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @if (Session["Contest_id"] != null)
+        {
+            <h4>Recipes of @Session["Contest_id"].ToString()</h4>
+            <input type="hidden" name="Contester_id" value="@Session["Contest_id"]" />
+        }
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ingredent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p id="cont">
+                    <input type="text" id="igre" name="txtIgredent" />
+                </p>
+                <button id="addIgre" type="button" class="btn btn-outline-primary btn-lg">+</button>
+                <button id="RemoveIgre" type="button" class="btn btn-outline-primary btn-lg">-</button>
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p id="cont">
+                    <input type="text" id="content" name="txtText" required />
+                    <input type="file" name="Url" />
+                </p>
+                <button id="addContent" type="button" class="btn btn-outline-primary btn-lg">+</button>
+                <button id="RemoveContent" type="button" class="btn btn-outline-primary btn-lg">-</button>
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.R_Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="txtStatus">
+                    <option value="0">Free</option>
+                    <option value="1">Only members can read this recipe</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.R_Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cate_id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Cate_id", (IEnumerable<SelectListItem>)ViewBag.Cate_id, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Cate_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Levels, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="rate">
+                    <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="very hard">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="hard">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="medium">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="easy">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="for children">1 star</label>
+                </div>
+                @Html.ValidationMessageFor(model => model.Levels, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <p style="color:red;">@ViewBag.FileStatus</p>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+
+    $("#addContent").click(function e() {
+        $("<p id=\"cont\"> <input type=\"text\" id=\"content\" name=\"txtText\" required />" + " <input type=\"file\" name=\"Url\" /></p>").insertBefore("#addContent");
+    });
+    $("#RemoveContent").click(function e() {
+        $("#RemoveContent").prev().prev().remove();
+    });
+    $("#addIgre").click(function e() {
+        $("<p id=\"igre\"> <input type=\"text\" id=\"content\" name=\"txtIgredent\" /></p>").insertBefore("#addIgre");
+    });
+    $("#RemoveIgre").click(function e() {
+        $("#RemoveIgre").prev().prev().remove();
+    });
+
+</script>

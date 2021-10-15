@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BankingDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Banks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="clients">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="accNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="IdentificationId" Type="nvarchar" MaxLength="15" />
+          <Property Name="BankId" Type="int" />
+          <Property Name="balance" Type="real" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="tokenkey" Type="nvarchar" MaxLength="50" />
+          <Property Name="expdate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="transactions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="senderId" Type="nvarchar" MaxLength="20" />
+          <Property Name="receiverId" Type="nvarchar" MaxLength="20" />
+          <Property Name="amount" Type="real" />
+        </EntityType>
+        <Association Name="FK__clients__BankId__5070F446">
+          <End Role="Banks" Type="Self.Banks" Multiplicity="0..1" />
+          <End Role="clients" Type="Self.clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clients">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__transacti__recei__59FA5E80">
+          <End Role="clients" Type="Self.clients" Multiplicity="0..1" />
+          <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="transactions">
+              <PropertyRef Name="receiverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__transacti__sende__59063A47">
+          <End Role="clients" Type="Self.clients" Multiplicity="0..1" />
+          <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="transactions">
+              <PropertyRef Name="senderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BankingDbModelStoreContainer">
+          <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transactions" EntityType="Self.transactions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__clients__BankId__5070F446" Association="Self.FK__clients__BankId__5070F446">
+            <End Role="Banks" EntitySet="Banks" />
+            <End Role="clients" EntitySet="clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__transacti__recei__59FA5E80" Association="Self.FK__transacti__recei__59FA5E80">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="transactions" EntitySet="transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__transacti__sende__59063A47" Association="Self.FK__transacti__sende__59063A47">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="transactions" EntitySet="transactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BankingDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bank">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="clients" Relationship="BankingDbModel.FK__clients__BankId__5070F446" FromRole="Bank" ToRole="client" />
+        </EntityType>
+        <EntityContainer Name="BankingDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Banks" EntityType="Self.Bank" />
+          <EntitySet Name="clients" EntityType="BankingDbModel.client" />
+          <EntitySet Name="transactions" EntityType="BankingDbModel.transaction" />
+          <AssociationSet Name="FK__clients__BankId__5070F446" Association="BankingDbModel.FK__clients__BankId__5070F446">
+            <End Role="Bank" EntitySet="Banks" />
+            <End Role="client" EntitySet="clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__transacti__recei__59FA5E80" Association="BankingDbModel.FK__transacti__recei__59FA5E80">
+            <End Role="client" EntitySet="clients" />
+            <End Role="transaction" EntitySet="transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__transacti__sende__59063A47" Association="BankingDbModel.FK__transacti__sende__59063A47">
+            <End Role="client" EntitySet="clients" />
+            <End Role="transaction" EntitySet="transactions" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="accNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="IdentificationId" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="BankId" Type="Int32" />
+          <Property Name="balance" Type="Single" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tokenkey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="expdate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Bank" Relationship="BankingDbModel.FK__clients__BankId__5070F446" FromRole="client" ToRole="Bank" />
+          <NavigationProperty Name="transactions" Relationship="BankingDbModel.FK__transacti__recei__59FA5E80" FromRole="client" ToRole="transaction" />
+          <NavigationProperty Name="transactions1" Relationship="BankingDbModel.FK__transacti__sende__59063A47" FromRole="client" ToRole="transaction" />
+        </EntityType>
+        <EntityType Name="transaction">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="senderId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="receiverId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="amount" Type="Single" />
+          <NavigationProperty Name="client" Relationship="BankingDbModel.FK__transacti__recei__59FA5E80" FromRole="transaction" ToRole="client" />
+          <NavigationProperty Name="client1" Relationship="BankingDbModel.FK__transacti__sende__59063A47" FromRole="transaction" ToRole="client" />
+        </EntityType>
+        <Association Name="FK__clients__BankId__5070F446">
+          <End Type="BankingDbModel.Bank" Role="Bank" Multiplicity="0..1" />
+          <End Type="BankingDbModel.client" Role="client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bank">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="client">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__transacti__recei__59FA5E80">
+          <End Type="BankingDbModel.client" Role="client" Multiplicity="0..1" />
+          <End Type="BankingDbModel.transaction" Role="transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="transaction">
+              <PropertyRef Name="receiverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__transacti__sende__59063A47">
+          <End Type="BankingDbModel.client" Role="client" Multiplicity="0..1" />
+          <End Type="BankingDbModel.transaction" Role="transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="transaction">
+              <PropertyRef Name="senderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BankingDbModelStoreContainer" CdmEntityContainer="BankingDbEntities">
+          <EntitySetMapping Name="Banks">
+            <EntityTypeMapping TypeName="BankingDbModel.Bank">
+              <MappingFragment StoreEntitySet="Banks">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="BankingDbModel.client">
+              <MappingFragment StoreEntitySet="clients">
+                <ScalarProperty Name="expdate" ColumnName="expdate" />
+                <ScalarProperty Name="tokenkey" ColumnName="tokenkey" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="IdentificationId" ColumnName="IdentificationId" />
+                <ScalarProperty Name="accNumber" ColumnName="accNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transactions">
+            <EntityTypeMapping TypeName="BankingDbModel.transaction">
+              <MappingFragment StoreEntitySet="transactions">
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="receiverId" ColumnName="receiverId" />
+                <ScalarProperty Name="senderId" ColumnName="senderId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

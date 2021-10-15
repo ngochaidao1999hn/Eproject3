@@ -1,0 +1,94 @@
+﻿@model Eproject3.Models.Users
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div class="row">
+    <div class="col-sm-12">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-5 form-style">
+            <div class="col-sm-12">
+                <div class="user-icon">
+                    <img src="/images/@Html.DisplayFor(model=>model.Img)" height="50" width="50" alt="Avatar" />
+                </div>
+
+            </div>
+            @using (Html.BeginForm())
+            {
+
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal" style="margin-top:15px;">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.id)
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="UPhone">Phone Number</label>
+                        <div class="col-md-10">
+                            @Html.ValidationMessageFor(model => model.UPhone, "", new { @class = "text-danger" })
+                            @Html.DisplayFor(model => model.UPhone, new { htmlAttributes = new { @class = "form-control font27" } })
+                        </div>
+                    </div>
+                    @Html.HiddenFor(model => model.UPass, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="UAdress">User Name</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.UAdress, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UAdress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="AccNum">Account Number</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.AccNum, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AccNum, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @Html.HiddenFor(model => model.Img, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HiddenFor(model => model.UPhone, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Packs_name">Package:</label>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.Packs.name, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Exp_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.Exp_Date, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <hr />
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+<br />
+
+<div class="user-menu">
+    <ul>
+        <li><a href="/Recipes/">Your recipes</a></li>
+        <li><a href="/Tips/">Your Tips</a></li>
+        <li><a href="/Users/ChangePwd">Change Password</a></li>
+        <li><a href="/Users/ChangePhoto">Change Profile Picture</a></li>
+        <li><a href="/Users/Extend">Extend your account</a></li>
+    </ul>
+</div>
+
+<hr />
+@*<form action="/Users/ChangePass">
+        <img src="/images/@Html.DisplayFor(model=>model.Img)" />
+    </form>*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+</div>  

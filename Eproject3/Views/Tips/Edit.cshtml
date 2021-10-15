@@ -1,0 +1,112 @@
+﻿@model Eproject3.Models.Tips
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @*Dong` nay la su khac biet*@
+    @Html.HiddenFor(model=>model.Img)
+    @Html.HiddenFor(model=>model.Content)
+    <div class="form-group">
+        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                var Content_step = Model.Content.Split('$').ToList();
+                foreach (var i in Content_step)
+                {
+                    <p><input type="text" name="txtText" value="@i" class="form-control"  /> <input type="file" name="Url" class="form-control" /></p>
+                }
+                <button id="addContent" type="button" class="btn btn-outline-primary btn-lg">+</button>
+                <button id="RemoveContent" type="button" class="btn btn-outline-primary btn-lg">-</button>
+            }
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.isFree, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.isFree, new SelectList(new[] { new { Value = "true", Text = "Free" }, new { Value = "false", Text = "Must be member for read" }, }, "Value", "Text", Model))
+            @Html.ValidationMessageFor(model => model.isFree, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Cate_id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("Cate_id", (IEnumerable<SelectListItem>)ViewBag.Cate_id, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Cate_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Levels, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="rate">
+                <input type="radio" id="star5" name="rate" value="5" />
+                <label for="star5" title="very hard">5 stars</label>
+                <input type="radio" id="star4" name="rate" value="4" />
+                <label for="star4" title="hard">4 stars</label>
+                <input type="radio" id="star3" name="rate" value="3" />
+                <label for="star3" title="medium">3 stars</label>
+                <input type="radio" id="star2" name="rate" value="2" />
+                <label for="star2" title="easy">2 stars</label>
+                <input type="radio" id="star1" name="rate" value="1" />
+                <label for="star1" title="for children">1 star</label>
+            </div>
+            @Html.ValidationMessageFor(model => model.Levels, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+            <p style="color:red;">@ViewBag.FileStatus</p>
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function () {
+        var Level = @Model.Levels;
+        console.log(Level)
+        $("input[type=radio]").each(function () {
+            if ($(this).val() == Level) {
+                this.setAttribute("checked", "checked");
+            }
+
+        });
+
+
+    });
+    $("#addContent").click(function e() {
+            $(" <p>"+" <input type=\"text\" id=\"content\" name=\"txtText\" class=\"form-control\"/>"+" <input type=\"file\" name=\"Url\"class=\"form-control\" />"+ "</p>").insertBefore("#addContent");
+    });
+    $("#RemoveContent").click(function e() {
+        $("#RemoveContent").prev().prev().remove();
+    });
+</script>

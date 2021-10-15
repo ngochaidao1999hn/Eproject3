@@ -1,0 +1,74 @@
+﻿@model PagedList.IPagedList<Eproject3.Models.Recipes>
+@using PagedList.Mvc;
+@using Eproject3.Models
+@{
+    ViewBag.Title = "Home Page";
+    var Cate = (IEnumerable<Categories>)ViewBag.Cate;
+    var tips = (IEnumerable<Tips>)ViewBag.Tips;
+    var count = 0;
+}
+<a class="alert-info">@ViewBag.done</a>
+<div class="container">
+
+    <div class="content-img">
+    </div>
+    <hr />
+    <div class="content  infor">
+        <div class="col-sm-3"><img src="~/images/unnamed.jpg" /></div>
+        @*phan nay la phan gioi thieu thang James Thew nhe Tien*@
+    <div class="col-sm-9 introduct">
+        James Thew is famous in Sweden and around the world thanks to head chef Magnus Nilsson. Voted among the worlds 50 best restaurants in 2012, Faviken is in north of Stockholm and offers accommodations for diners and travelers. As this location experiences long winters, James is able to get the best out of the long-stored vegetables and meat. He juggles himself from being a hunter, a fisherman, a farmer and an outstanding chef. Diners savor specialties like the 18 month-old scallops served (like most of the dishes) with wine. James has much to share in the culinary world and his innovations have opened doors to this part of Sweden were food enthusiasts cannot wait for a try.
+    </div>
+    </div>
+    <hr />
+    @*TienDo oi style cai nay` nhe !!!!!!!!!!!!!!!!!!!*@
+    <div class="menu">
+        <ul>
+            @foreach (var item in Cate)
+            {
+
+                <li><a href="/Home/Search?kw=@item.Cate_Name">@item.Cate_Name</a></li>
+
+            }
+        </ul>
+    </div>
+    <hr />
+    <form method="get" action="/Home/Search">
+        <div class="search-bar">
+            <input name="kw" id="search-tool" required type="text" placeholder="Search for Tips/Recipes: " />
+            @*<button>Search</button>*@
+        </div>
+    </form>
+
+    <div class="content">
+        <h1>Recipes For Community</h1>
+        <div class="container">
+            @*Cho nay hien thi Recipes,An vao thi hien detal no ra,Dao Ngoc Hai lo phan nay*@
+            @foreach (var items in Model)
+            {
+
+                <a href="/Recipes/Details/@items.id">
+                    <div class="col-sm-4 box-item relative">
+                        <div class="item">
+                            <div class="blur-hover">
+                                <h1>@items.Title</h1>
+                            </div>
+                            <img src="~/images/@items.Img.Split('$').Last()">
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+        <div class="row">
+            <div class="center">
+                @*Need Style*@
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page }))
+            </div>
+        </div>
+    </div>
+</div>
+
+                    

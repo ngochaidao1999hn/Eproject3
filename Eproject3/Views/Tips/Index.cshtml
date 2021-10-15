@@ -1,0 +1,59 @@
+﻿
+@model PagedList.IPagedList<Eproject3.Models.Tips>
+@using PagedList.Mvc;
+@using Eproject3.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = (Users)Session["user"];
+}
+
+@if (user != null)
+{
+    if (Model.Count() <= 0)
+    {
+        <h2>You havent't posted any Tips</h2>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
+    else
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <div class="content">
+            <div class="container">
+                @foreach (var items in Model)
+                {
+                    <div class="box-item relative">
+
+                        <div class="item">
+                            <div class="blur-hover">
+                                <h1>@items.Title</h1>
+
+                                @Html.ActionLink("Edit", "Edit", new { id = items.id })
+                                @Html.ActionLink("Details", "Details", new { id = items.id })
+                                @Html.ActionLink("Delete", "Delete", new { id = items.id })
+
+                            </div>
+                            <img src="~/images/@items.Img.Split('$').First()" alt="...">
+                        </div>
+
+                    </div>
+                }
+            </div>
+            <div>
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                    new { page }))
+            </div>
+        </div>
+    }
+
+}
+
+
+
+
